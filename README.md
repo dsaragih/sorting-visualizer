@@ -1,7 +1,7 @@
 # Sorting Algorithm Visualizer
 
-## Things to do: 
-- Implement Quick Sort and Tim Sort
-- Fix the visualizations for the recursive algorithms
-- Possibly implement a timer for each display (which also means making sure animations are uniform)
-- Add a reset button
+Simple sorting algorithm visualizer made using React. This happens to be my first project wherein I use React hooks and React Bootstrap for the UI components. I encountered some difficulty transferring states across the different components, specifically when transferring the state of the `displays`. As a result awkward function calls such as `displays['handleClick'](i)` were necessary to use the nested object. An alternative approach would be to declare the necessary states inside of `App`, however, distinguishing between the 4 displays would have been messy.
+
+Another motif of this project was the animation of the array whilst sorting. For the algorithms which used a for loop, the animations were quite easy. However, for those that used recursion, there were some problems using async-await within the recursive functions. I noticed that when async-await was applied to certain  locations within a function, the array was not sorted (although without async, the algorithm worked fine). Another issue was the re-indexing within recursive functions, specifically merge sort, wherein the left and right arrays are slices of the original array. As a result, I modified the algorithm so that it sorted recursively in the array itself. Despite this, the async-await problem still plagued the animation.
+
+Check out the project [here](https://dsaragih.github.io/sorting-visualizer/)
