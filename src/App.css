@@ -42,7 +42,15 @@ canvas {
 #master {
   position: absolute;
   left: 50%;
-  top: 53%;
+  top: 48%;
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+#reset {
+  position: absolute;
+  left: 50%;
+  top: 59%;
+  transform: translate(-50%, -50%);
+  text-align: center; 
 }

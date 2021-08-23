@@ -1,4 +1,3 @@
-
 export const bubbleSort = async (array, ctx, draw) => {
     for (let i = 0; i < array.length - 1; i++) {
 
@@ -51,21 +50,17 @@ export const insertionSort = async (array, ctx, draw) => {
 }
 
 
-export const mergeSort = async(array, ctx, draw, s=0, e=99, arr=[]) => {
-    if (array.length == 100) {
-        arr = array.slice();
-    }
-    if (array.length > 1) {
-        const mid = Math.floor(array.length / 2);
-        const left = array.slice(0, mid);
-        const right = array.slice(mid);
+export const mergeSort = async(array, ctx, draw, start=0, end=100) => {
+    if (end - start > 1) {
+        const mid = Math.floor((end + start) / 2);
+        
+        mergeSort(array, ctx, draw, start, mid);
+        mergeSort(array, ctx, draw, mid, end);
 
-        mergeSort(left, ctx, draw, s, mid - 1, arr);
-        mergeSort(right, ctx, draw, mid, e, arr);
+        const left = array.slice(start, mid);
+        const right = array.slice(mid, end);
 
-        let i = 0, j = 0, k = 0;
-		
-        let r = s;
+        let i = 0, j = 0, k = start;
         while (i < left.length && j < right.length) {
             if (left[i] < right[j]) {
                 array[k] = left[i];
@@ -74,32 +69,64 @@ export const mergeSort = async(array, ctx, draw, s=0, e=99, arr=[]) => {
                 array[k] = right[j];
                 j++;
             }
-            arr[r] = array[k];
-            ctx.fillRect(ctx.canvas.width * r / 100, ctx.canvas.height * (100 - array[k]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
-            await new Promise(q => setTimeout(q , 100));
-            r++;
+            //ctx.fillRect(ctx.canvas.width * k / 100, ctx.canvas.height * (100 - array[k]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
             k++;
+            //await new Promise(q => setTimeout(q , 10));
         }
 
         while (i < left.length) {
             array[k] = left[i];
             i++;
-            arr[r] = array[k];
-            ctx.fillRect(ctx.canvas.width * r / 100, ctx.canvas.height * (100 - array[k]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
-            await new Promise(q => setTimeout(q , 100));
-            r++;
+            //ctx.fillRect(ctx.canvas.width * k / 100, ctx.canvas.height * (100 - array[k]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
             k++;
+            //await new Promise(q => setTimeout(q , 1));
         }
 
         while (j < right.length) {
 			array[k] = right[j];
 			j++;
-            arr[r] = array[k];
-            ctx.fillRect(ctx.canvas.width * r / 100, ctx.canvas.height * (100 - array[k]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
-            await new Promise(q => setTimeout(q , 100));
-            r++;
+            // ctx.fillRect(ctx.canvas.width * k / 100, ctx.canvas.height * (100 - array[k]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
+            // await new Promise(q => setTimeout(q , 1));
             k++;
         }
-        draw(ctx, arr);
+        draw(ctx, array);
     } 
+    console.log(array)
+}
+
+const partition = (array, ctx, draw, start, end) => {
+    let pivotIndex = start;
+    let pivot = array[pivotIndex];
+  
+    while (start < end) {
+        while (start < array.length && array[start] <= pivot) {
+            start++;
+        }
+        while (array[end] > pivot) {
+            end--;
+        }
+        if (start < end) {
+            [array[start], array[end]] = [array[end], array[start]];
+        }
+        
+    }
+
+    [array[end], array[pivotIndex]] = [array[pivotIndex], array[end]];
+    return end;
+  }
+  
+export const quickSort = async (array, ctx, draw, start=0, end=99) => {
+    if (start < end) {
+        let p = partition(array, ctx, draw, start, end);
+        console.log(array)
+        draw(ctx, array);
+        ctx.fillStyle = '#ff0000';
+        ctx.fillRect(ctx.canvas.width * start / 100, ctx.canvas.height * (100 - array[start]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
+        ctx.fillRect(ctx.canvas.width * end / 100, ctx.canvas.height * (100 - array[end]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
+        await new Promise(r => setTimeout(r, 150));
+
+        quickSort(array, ctx, draw, start, p - 1);
+        quickSort(array, ctx, draw, p + 1, end);
+    }
+    draw(ctx, array)
 }

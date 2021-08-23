@@ -1,13 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { bubbleSort, selectionSort, insertionSort, mergeSort } from './algorithms/sortingAlgorithms';
+import { bubbleSort, selectionSort, insertionSort, mergeSort, quickSort } from './algorithms/sortingAlgorithms';
 import './App.css';
 import { Form, Button } from 'react-bootstrap';
 
 /*
   To do:
-  - Add a timer to all 4 displays for speed comparison
-  - Implement the ff algos: tim sort, quick sort
-  - reset button
   - fix animation during recursion
 */
 
@@ -15,7 +12,8 @@ const algorithms = {
   'Bubble Sort': bubbleSort,
   'Selection Sort': selectionSort,
   'Insertion Sort': insertionSort,
-  'Merge Sort': mergeSort
+  'Merge Sort': mergeSort,
+  'Quick Sort': quickSort
 }
 
 function createArray () {
@@ -46,6 +44,7 @@ function Controls (props) {
       <option value="Insertion Sort">Insertion Sort</option>
       <option value="Selection Sort">Selection Sort</option>
       <option value="Merge Sort">Merge Sort</option>
+      <option value="Quick Sort">Quick Sort</option>
     </Form.Select>
   )
 }
@@ -79,13 +78,21 @@ function useCanvas (sorting, array, state) {
     const canvas = canvasRef.current;
     canvas.style.width = '100%';
     canvas.style.height = '100%';
-    
     const context = canvas.getContext('2d');
+        
     draw(context, array);
+    let animationFrameId;
     
     if (state) {
       algorithms[sorting](array, context, draw);
+      const render = () => {
+        animationFrameId = window.requestAnimationFrame(render);
+      }
+      render();
     } 
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+    }
     
   }, [state])
   
@@ -106,19 +113,20 @@ function App () {
       handleClick: i => handleClick(i),
       handleChange: (e, i) => handleChange(e, i)
     };
-  }
+  };
+
   const [displays, setDisplays] = useState(dict);
     
   const handleClick = i => {
     let clone = {...displays};
-    clone[i]['start'] = !displays[i]['start']
+    clone[i]['start'] = true;
     setDisplays(clone);
   }
 
   const handleMasterClick = () => {
     let clone = {...displays};
     for (let i = 0; i < 4; i++) {
-      clone[i]['start'] = !displays[i]['start'];
+      clone[i]['start'] = true;
     }
     setDisplays(clone);
   }
@@ -129,13 +137,23 @@ function App () {
     setDisplays(clone);
   }
   
+  const handleReset = () => {
+    let clone = {...displays};
+    for (let i = 0; i < 4; i++) {
+      clone[i]['start'] = false;
+      clone[i]['arr'] = array.slice();
+    }
+    setDisplays(clone);
+  }
+
   return (
     <div id="container">
-      <Canvas draw={draw} displays={displays[0]} idx='0'/>
-      <Canvas draw={draw} displays={displays[1]} idx='1'/>
-      <Canvas draw={draw} displays={displays[2]} idx='2'/>
-      <Canvas draw={draw} displays={displays[3]} idx='3'/>
+      <Canvas displays={displays[0]} idx='0'/>
+      <Canvas displays={displays[1]} idx='1'/>
+      <Canvas displays={displays[2]} idx='2'/>
+      <Canvas displays={displays[3]} idx='3'/>
       <Button id="master" size="lg" variant="danger" onClick={() => handleMasterClick()}>Start All</Button>
+      <Button id="reset" size="lg" variant="info" onClick={() => handleReset()}>Reset All</Button>
     </div>
   )
 
