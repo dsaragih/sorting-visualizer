@@ -66,7 +66,6 @@ export const mergeSort = async(array, ctx, draw, s=0, e=99, arr=[]) => {
         let i = 0, j = 0, k = 0;
 		
         let r = s;
-        draw(ctx, arr);
         while (i < left.length && j < right.length) {
             if (left[i] < right[j]) {
                 array[k] = left[i];
@@ -75,10 +74,9 @@ export const mergeSort = async(array, ctx, draw, s=0, e=99, arr=[]) => {
                 array[k] = right[j];
                 j++;
             }
-            //ctx.fillStyle = "#ff0000";
             arr[r] = array[k];
             ctx.fillRect(ctx.canvas.width * r / 100, ctx.canvas.height * (100 - array[k]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
-            await new Promise(r => setTimeout(r , 100));
+            await new Promise(q => setTimeout(q , 100));
             r++;
             k++;
         }
@@ -86,10 +84,9 @@ export const mergeSort = async(array, ctx, draw, s=0, e=99, arr=[]) => {
         while (i < left.length) {
             array[k] = left[i];
             i++;
-            //ctx.fillStyle = "#ff0000";
             arr[r] = array[k];
             ctx.fillRect(ctx.canvas.width * r / 100, ctx.canvas.height * (100 - array[k]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
-            await new Promise(r => setTimeout(r , 100));
+            await new Promise(q => setTimeout(q , 100));
             r++;
             k++;
         }
@@ -97,20 +94,12 @@ export const mergeSort = async(array, ctx, draw, s=0, e=99, arr=[]) => {
         while (j < right.length) {
 			array[k] = right[j];
 			j++;
-            //ctx.fillStyle = "#ff0000";
             arr[r] = array[k];
             ctx.fillRect(ctx.canvas.width * r / 100, ctx.canvas.height * (100 - array[k]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
-            await new Promise(r => setTimeout(r , 100));
+            await new Promise(q => setTimeout(q , 100));
             r++;
             k++;
         }
-        // while (r <= e && p <= k) {
-        //     arr[r] = array[p];
-        //     ctx.fillRect(ctx.canvas.width * r / 100, ctx.canvas.height * (100 - array[p]) / 100, ctx.canvas.width / 100, ctx.canvas.height);
-        //     await new Promise(r => setTimeout(r , 100))
-        //     r++;
-        //     p++;
-        // }
         draw(ctx, arr);
     } 
 }

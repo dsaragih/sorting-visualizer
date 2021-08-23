@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { bubbleSort, selectionSort, insertionSort, mergeSort } from './algorithms/NaiveAlgorithms';
+import { bubbleSort, selectionSort, insertionSort, mergeSort } from './algorithms/sortingAlgorithms';
 import './App.css';
 import { Form, Button } from 'react-bootstrap';
 
 /*
-  - Consider using react-bootstrap for tabs and dropdowns
-  - check geeksforgeeks for a list of sorting algos
   To do:
-  3. Add a timer to all 4 displays for speed comparison
-  4. Implement the ff algos: merge sort, tim sort, quick sort
+  - Add a timer to all 4 displays for speed comparison
+  - Implement the ff algos: tim sort, quick sort
+  - reset button
+  - fix animation during recursion
 */
 
 const algorithms = {
@@ -56,13 +56,14 @@ function Canvas (props) {
   const { displays, idx } = props
 
   const canvasRef = useCanvas(displays['sorting'], displays['arr'], displays['start']);
+  const label = Number(idx) + 1;
 
   return (
     <div className="display">
       <div className="header">
-        <span className="title">{`Display ${idx}`}</span>
+        <span className="title">{`Display ${label}`}</span>
         <Controls handleChange={(e, i) => displays['handleChange'](e, i)} i={idx}/>
-        <Button variant="success" className="start" id={`toggle${(idx + 1)}`} onClick={() => displays['handleClick'](idx)} size="sm">Start</Button>
+        <Button variant="success" className="start" id={`toggle${(label)}`} onClick={() => displays['handleClick'](idx)} size="sm">Start</Button>
       </div>
       <canvas ref={canvasRef}></canvas>
     </div>
