@@ -3,11 +3,6 @@ import { bubbleSort, selectionSort, insertionSort, mergeSort, quickSort } from '
 import './App.css';
 import { Form, Button } from 'react-bootstrap';
 
-/*
-  To do:
-  - fix animation during recursion
-*/
-
 const algorithms = {
   'Bubble Sort': bubbleSort,
   'Selection Sort': selectionSort,
