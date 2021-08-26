@@ -1,8 +1,6 @@
 export function* bubbleSort (array) {
     for (let i = 0; i < array.length - 1; i++) {
-
         for (let j = 0; j < array.length - i - 1; j++) {
-
 			if (array[j] > array[j + 1]) {
 				[array[j], array[j + 1]] = [array[j + 1], array[j]];
 			}
@@ -15,9 +13,7 @@ export function* selectionSort (array) {
     for (let i = 0; i < array.length; i++) {
         let min = i;
         for (let j = i; j < array.length; j++) {
-
             if (array[j] < array[min]) min = j;
-
             yield j;
         }
         [array[i], array[min]] = [array[min], array[i]];
@@ -73,7 +69,6 @@ export function* mergeSort (array, start=0, end=200) {
         while (j < right.length) {
 			array[k] = right[j];
 			j++;
-
             k++;
             yield j;
             yield k;

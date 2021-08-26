@@ -3,11 +3,6 @@ import { bubbleSort, selectionSort, insertionSort, mergeSort, quickSort } from '
 import './App.css';
 import { Form, Button } from 'react-bootstrap';
 
-/*
-  To do:
-  - fix animation during recursion
-*/
-
 const algorithms = {
   'Bubble Sort': bubbleSort,
   'Selection Sort': selectionSort,
@@ -17,6 +12,7 @@ const algorithms = {
 }
 
 function createArray () {
+  // Produces an array with elements 1...200
   let array = [...Array(200).keys()].map(x => x + 1);
 
   // Durstenfeld shuffle
@@ -38,6 +34,7 @@ const draw = (ctx, array, color) => {
 
 function Controls (props) {
   const {handleChange, i} = props;
+  // Dropdown menu
   return (
     <Form.Select style={{width: '30%'}}className="dropdown" defaultValue="Bubble Sort" size="sm" onChange={e => handleChange(e, i)}>
       <option>Bubble Sort</option>
@@ -62,7 +59,7 @@ function Canvas (props) {
       <div className="header">
         <span className="title">{`Display ${label}`}</span>
         <Controls handleChange={(e, i) => displays['handleChange'](e, i)} i={idx}/>
-        <Button variant="success" className="start" id={`toggle${(label)}`} onClick={() => displays['handleClick'](idx)} size="sm">Start</Button>
+        <Button variant="success" id={`toggle${(label)}`} onClick={() => displays['handleClick'](idx)} size="sm">Start</Button>
       </div>
       <canvas ref={canvasRef}></canvas>
     </div>
@@ -71,11 +68,14 @@ function Canvas (props) {
 
 function useCanvas (sorting, array, state) {
   
+  // useRef in order to retrieve the current version of canvas
   const canvasRef = useRef(null);
   
   useEffect(() => {
     
     const canvas = canvasRef.current;
+
+    // Causes canvas to fill entire div (accounting for padding, etc.)
     canvas.style.width = '100%';
     canvas.style.height = '100%';
     const context = canvas.getContext('2d');
@@ -85,23 +85,32 @@ function useCanvas (sorting, array, state) {
     
     if (state) {
       let sort = algorithms[sorting](array);
+
+      // The animations for the O(n ** 2) algorithms were really slow
+      // not necessarily because of the time complexity but because it traverses
+      // a lot of elements at once, thus "yield" will be invoked more often
+
       if (sorting == 'Bubble Sort' || sorting == 'Insertion Sort' || sorting == 'Selection Sort') {
         setInterval(() => {
           sort.next()
         }, 0)
+      } else if (sorting == 'Merge Sort'){
+        setInterval(() => {
+          sort.next()
+        }, 18)
       } else {
         setInterval(() => {
           sort.next()
-        }, 60)
+        }, 25)
       }
       const render = () => {
         animationFrameId = window.requestAnimationFrame(render);
         draw(context, array, '#FF7F7F');
-        sort.next();
       }
       render();
     } 
     return () => {
+      // dismounts the animation when the component dismounts
       window.cancelAnimationFrame(animationFrameId);
     }
     
@@ -115,6 +124,10 @@ function App () {
 
   const array = createArray();
   
+  // The dict looks a lot like a state that would be found in a React class component
+  // It would also be possible to split the dict into 4 objects, each having their
+  // respective useStates
+
   const dict = {};
   for (let c = 0; c < 4; c++) {
     dict[c] = {
@@ -129,12 +142,14 @@ function App () {
   const [displays, setDisplays] = useState(dict);
     
   const handleClick = i => {
+    // Handles the individual buttons
     let clone = {...displays};
     clone[i]['start'] = true;
     setDisplays(clone);
   }
 
   const handleMasterClick = () => {
+    // Handles the central button
     let clone = {...displays};
     for (let i = 0; i < 4; i++) {
       clone[i]['start'] = true;
@@ -143,12 +158,14 @@ function App () {
   }
 
   const handleChange = (event, i) => {
+    // Handles the dropdown menu
     let clone = {...displays};
     clone[i]['sorting'] = event.target.value;
     setDisplays(clone);
   }
   
   const handleReset = () => {
+    // Handles the reset button
     let clone = {...displays};
     for (let i = 0; i < 4; i++) {
       clone[i]['start'] = false;
@@ -167,7 +184,6 @@ function App () {
       <Button id="reset" size="lg" variant="info" onClick={() => handleReset()}>Reset All</Button>
     </div>
   )
-
 }
 
 export default App;
