@@ -17,7 +17,7 @@ const algorithms = {
 }
 
 function createArray () {
-  let array = [...Array(100).keys()].map(x => x + 1);
+  let array = [...Array(200).keys()].map(x => x + 1);
 
   // Durstenfeld shuffle
   for (let i = array.length - 1; i > 0; i--) {
@@ -28,11 +28,11 @@ function createArray () {
   return array;
 };
 
-const draw = (ctx, array) => {
+const draw = (ctx, array, color) => {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   
-  ctx.fillStyle = '#ffffff';
-  array.forEach((el, i) => ctx.fillRect(ctx.canvas.width * i / 100, ctx.canvas.height * (100 - el) / 100, ctx.canvas.width / 100, ctx.canvas.height));
+  ctx.fillStyle = color;
+  array.forEach((el, i) => ctx.fillRect(ctx.canvas.width * i / 200, ctx.canvas.height * (200 - el) / 200, ctx.canvas.width / 200, ctx.canvas.height));
   
 };
 
@@ -80,13 +80,24 @@ function useCanvas (sorting, array, state) {
     canvas.style.height = '100%';
     const context = canvas.getContext('2d');
         
-    draw(context, array);
+    draw(context, array, '#fff');
     let animationFrameId;
     
     if (state) {
-      algorithms[sorting](array, context, draw);
+      let sort = algorithms[sorting](array);
+      if (sorting == 'Bubble Sort' || sorting == 'Insertion Sort' || sorting == 'Selection Sort') {
+        setInterval(() => {
+          sort.next()
+        }, 0)
+      } else {
+        setInterval(() => {
+          sort.next()
+        }, 60)
+      }
       const render = () => {
         animationFrameId = window.requestAnimationFrame(render);
+        draw(context, array, '#FF7F7F');
+        sort.next();
       }
       render();
     } 
