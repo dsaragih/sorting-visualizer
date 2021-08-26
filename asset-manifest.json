@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/sorting-visualizer/static/css/main.5c1ac6f4.chunk.css",
-    "main.js": "/sorting-visualizer/static/js/main.6b6d901a.chunk.js",
-    "main.js.map": "/sorting-visualizer/static/js/main.6b6d901a.chunk.js.map",
-    "runtime-main.js": "/sorting-visualizer/static/js/runtime-main.1d649bba.js",
-    "runtime-main.js.map": "/sorting-visualizer/static/js/runtime-main.1d649bba.js.map",
+    "main.js": "/sorting-visualizer/static/js/main.8a7b8061.chunk.js",
+    "main.js.map": "/sorting-visualizer/static/js/main.8a7b8061.chunk.js.map",
+    "runtime-main.js": "/sorting-visualizer/static/js/runtime-main.06036ab3.js",
+    "runtime-main.js.map": "/sorting-visualizer/static/js/runtime-main.06036ab3.js.map",
     "static/css/2.da1eef19.chunk.css": "/sorting-visualizer/static/css/2.da1eef19.chunk.css",
-    "static/js/2.74aecad9.chunk.js": "/sorting-visualizer/static/js/2.74aecad9.chunk.js",
-    "static/js/2.74aecad9.chunk.js.map": "/sorting-visualizer/static/js/2.74aecad9.chunk.js.map",
-    "static/js/3.d3730e54.chunk.js": "/sorting-visualizer/static/js/3.d3730e54.chunk.js",
-    "static/js/3.d3730e54.chunk.js.map": "/sorting-visualizer/static/js/3.d3730e54.chunk.js.map",
+    "static/js/2.8ffb3c4f.chunk.js": "/sorting-visualizer/static/js/2.8ffb3c4f.chunk.js",
+    "static/js/2.8ffb3c4f.chunk.js.map": "/sorting-visualizer/static/js/2.8ffb3c4f.chunk.js.map",
+    "static/js/3.02fc6588.chunk.js": "/sorting-visualizer/static/js/3.02fc6588.chunk.js",
+    "static/js/3.02fc6588.chunk.js.map": "/sorting-visualizer/static/js/3.02fc6588.chunk.js.map",
     "index.html": "/sorting-visualizer/index.html",
     "static/css/2.da1eef19.chunk.css.map": "/sorting-visualizer/static/css/2.da1eef19.chunk.css.map",
     "static/css/main.5c1ac6f4.chunk.css.map": "/sorting-visualizer/static/css/main.5c1ac6f4.chunk.css.map",
-    "static/js/2.74aecad9.chunk.js.LICENSE.txt": "/sorting-visualizer/static/js/2.74aecad9.chunk.js.LICENSE.txt"
+    "static/js/2.8ffb3c4f.chunk.js.LICENSE.txt": "/sorting-visualizer/static/js/2.8ffb3c4f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.1d649bba.js",
+    "static/js/runtime-main.06036ab3.js",
     "static/css/2.da1eef19.chunk.css",
-    "static/js/2.74aecad9.chunk.js",
+    "static/js/2.8ffb3c4f.chunk.js",
     "static/css/main.5c1ac6f4.chunk.css",
-    "static/js/main.6b6d901a.chunk.js"
+    "static/js/main.8a7b8061.chunk.js"
   ]
 }
